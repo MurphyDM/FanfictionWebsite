@@ -26,7 +26,7 @@ function HorizontalScrollCardsContainer(props) {
     }, []);
 
     return (
-        (stories.length > 0) ?
+        ((stories!==null)&&(stories.length > 0)) ?
           <HorizontalScrollCards cards={stories}
             content={CardItem}
             subpath={
