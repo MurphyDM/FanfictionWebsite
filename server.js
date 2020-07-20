@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 app.use(favicon(path.join(__dirname, "favicon.ico")));
 app.use(express.static(path.join(__dirname, "client/public")));
@@ -35,6 +35,12 @@ app.use(passport.session());
 
 var router = express.Router();
 require('./app/routes.js')(app, router, passport);
+
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
 
 app.listen(port);
 console.log('Port:  ' + port + '...');
