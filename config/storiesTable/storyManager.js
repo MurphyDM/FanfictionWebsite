@@ -7,18 +7,21 @@ function calculateStoriesOffset(pageNumber) {
     return STORIES_ON_PAGE * pageNumber;
 
 }
-function uploadStory(image, title, body, genre, userId) {
+function uploadStory(responce, image, title, body, genre, userId) {
+    console.log("UPLOADING FUNC ****");
     Story.create({
         image: 'id' + image,
         title: title,
         body: body,
         time: date.getDateString(),
         genre: genre,
-        userId: userId
+        userId: 1
     }).then(res => {
-        return res;
+        console.log("result:", res);
+        responce.send("Story was uploaded successfully!")
     }).catch(err => {
-        return err;
+        console.log("UPLOADING ERROR");
+        responce.send(err);
     });
 }
 

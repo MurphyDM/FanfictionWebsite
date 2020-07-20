@@ -23,9 +23,7 @@ module.exports = (passport, router) => {
 
     router.post('/uploadStory', (req, res) => {
         console.log("Your request: ", req.body);
-        storyManager.uploadStory(req.body.image, req.body.title, req.body.body, req.body.genre, req.body.userId);
-        res.send("Story was uploaded successfully!")
-
+        storyManager.uploadStory(res, req.body.image, req.body.title, req.body.body, req.body.genre, req.body.userId);
     });
     return router;
 }
