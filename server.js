@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use(favicon(path.join(__dirname, "client/public/img", "favicon.ico")));
+app.use(favicon(path.join(__dirname, "favicon.ico")));
 app.use(express.static(path.join(__dirname, "client/public")));
 
 require('./config/auth/passport')(passport);

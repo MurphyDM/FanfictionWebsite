@@ -2,13 +2,10 @@
   "name": "imagine_react",
   "version": "1.0.0",
   "description": "Fanfiction web-site",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "concurrently run \"npm run server\" \"npm run client\"",
-    "client": "npm start --prefix client",
     "server": "nodemon server.js",
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "start": "node server.js"
   },
   "author": "MurphyDM",
   "license": "ISC",
