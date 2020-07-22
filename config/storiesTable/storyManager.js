@@ -7,49 +7,41 @@ function calculateStoriesOffset(pageNumber) {
     return STORIES_ON_PAGE * pageNumber;
 
 }
-function uploadStory(responce, image, title, body, genre, userId) {
-    console.log("UPLOADING FUNC ****");
+function uploadStory(responce, image, title, description, body, genre, userId) {
+    console.log("UPLOADING FUNCTION");
     Story.create({
-        image: 'id' + image,
         title: title,
+        description: description,
         body: body,
         time: date.getDateString(),
         genre: genre,
-        userId: 1
+        userId: userId
     }).then(res => {
-        console.log("result:", res);
-        responce.send("Story was uploaded successfully!")
+        console.log("Result: the story was uploaded successfully!");
+        responce.json(res.id);
     }).catch(err => {
-        console.log("UPLOADING ERROR");
+        console.log("Result: UPLOADING ERROR");
         responce.send(err);
     });
 }
 
-function getStories(res, page, quantity) {
-    const offset = calculateStoriesOffset(page),
-        limit = parseInt(quantity);
-    Story.findAll({
-        offset: offset,
-        limit: limit || STORIES_ON_PAGE
-    }).then(stories => {
-        console.log("Stories were found:", stories);
+function getStories(res) {
+    Story.findAll().then(stories => {
+        console.log("Result: stories were found");
         res.json(stories);
     }).catch(err => {
-        res.json(null);
+        res.json('');
     });
 }
 
-function getStoriesWhere(res, page, key, quantity) {
-    const offset = calculateStoriesOffset(page),
-        limit = parseInt(quantity);
+function getStoriesWhere(res, fieldName = "genre", fieldValue = "original", order = [['id', 'DESC']] ) {
     Story.findAll({
-        limit: limit||STORIES_ON_PAGE,
-        offset: offset||0,
         where: {
-            genre: key
-        }, // conditions
+            [fieldName]: fieldValue
+        },
+        order: order
     }).then(stories => {
-        console.log("Stories were found:", stories);
+        console.log("Result: stories were found");
         res.json(stories);
     }).catch(err => {
         res.json(null);
@@ -59,12 +51,26 @@ function getStoriesWhere(res, page, key, quantity) {
 
 function getSortedStories(res, page, order) {
     let offset = calculateStoriesOffset(page);
-    Story.findAll({offset: offset, limit: STORIES_ON_PAGE}).then(stories => {
-        console.log("Stories were found:", stories);
+    Story.findAll({
+        offset: offset, 
+        limit: STORIES_ON_PAGE}
+        ).then(stories => {
+        console.log("Result: stories were found");
         res.json(stories);
     }).catch(err => {
         res.json(null);
     });
+}
+
+function updateStory(storyId, fieldName, newValue) {
+    console.log("update story: ", storyId, fieldName, newValue)
+    Story.update({ [fieldName]: newValue }, {
+        where: {
+          id: storyId
+        }
+      }).then((res) => {
+        console.log(res);
+      });
 }
 
 function deleteStory(id) {
@@ -80,6 +86,7 @@ function deleteStory(id) {
 module.exports = {
     uploadStory,
     deleteStory,
-    getStories,
-    getStoriesWhere
+    getStories, 
+    getStoriesWhere, 
+    updateStory
 }

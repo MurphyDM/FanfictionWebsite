@@ -1,16 +1,16 @@
-import React from 'react'
-import Carousel from 'react-bootstrap/Carousel'
+import React from "react"
+import Carousel from "react-bootstrap/Carousel"
 
 const styles = {
     slider: {
-        height: '70vh'
+        height: "70vh"
     },
     slide: {
-        height: '70vh'
+        height: "70vh"
     },
     img: {
-        height: '70vh',
-        width: '100vw'
+        height: "70vh",
+        width: "100vw"
     }
 }
 

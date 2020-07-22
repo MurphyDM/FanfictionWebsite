@@ -1,14 +1,14 @@
-import React from 'react'
-import axios from 'axios'
+import React from "react"
+import axios from "axios"
 
-import Slideshow from './Slideshow'
-import SlideItem from './SlideItem'
+import Slideshow from "../components/Slideshow"
+import SlideItem from "../components/SlideItem"
 
 function SlideshowContainer(props) {
-    const [slides, setSlides] = React.useState([true]);
+    const [slides, setSlides] = React.useState(null);
 
     React.useEffect(() => {
-        axios.get('/getStories', {
+        axios.get("/getStories", {
             params: {
                 page: 0,
                 quantity: 3,
@@ -18,12 +18,15 @@ function SlideshowContainer(props) {
         }).then(response => {
             setSlides(response.data);
         }).catch((error) => {
-            console.log('error 3 ' + error);
+            console.log("error 3 " + error);
         });
     }, []);
 
     return (
-        <Slideshow slides={slides} content = {SlideItem} />
+        slides?
+        <Slideshow slides={slides} content = {SlideItem} />:             
+        <></>
+
     )
 }
 

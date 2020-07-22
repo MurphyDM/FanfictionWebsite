@@ -1,12 +1,6 @@
-import React from 'react'
-import {Row, CardGroup} from 'react-bootstrap'
-import CardItem from './CardItem'
-
-
-
-const styles = {
-}
-
+import React from "react"
+import { CardGroup } from "react-bootstrap"
+import CardItem from "./CardItem"
 
 function CardsCatalog(props) {
     return (

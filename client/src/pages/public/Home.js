@@ -1,16 +1,14 @@
-import React from 'react'
+import React from "react"
 
-import SlideshowContainer from '../components/SlideshowContainer'
-import HorizontalScrollCardsContainer from '../components/HorizontalScrollCardsContainer'
+import SlideshowContainer from "../../components/containers/SlideshowContainer"
+import HorizontalScrollCardsContainer from "../../components/containers/HorizontalScrollCardsContainer"
 
-const storyMainGenres = ['fantasy', 'romance', 'adventures', 'original'];
+const storyMainGenres = ["fantasy", "romance", "adventures", "original"];
 const styles = {
     chapter: {
-        marginTop: '15vh',
-        marginBottom: '1vh'
+        marginBottom: "3vh"
     }
 }
-
 
 function Home(props) {
     return (
@@ -19,7 +17,7 @@ function Home(props) {
         }>
             <SlideshowContainer/> 
             {
-                storyMainGenres.map((item, i) => {
+                storyMainGenres.map((item, i) => {  
                     return (
                         <HorizontalScrollCardsContainer genre={item}
                             key={i}/>

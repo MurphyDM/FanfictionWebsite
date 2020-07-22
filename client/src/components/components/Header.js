@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
     Navbar,
     Nav,
@@ -6,8 +6,7 @@ import {
     Container,
     Form,
     Button
-} from 'react-bootstrap'
-import {fromJS} from 'immutable'
+} from "react-bootstrap"
 
 class Header extends React.Component {
     render() {
@@ -15,7 +14,7 @@ class Header extends React.Component {
             <div>
                 <Navbar fixed="top" collapseOnSelect expand="md" bg="light">
                     <Container fluid>
-                        <Navbar.Brand href="#home" style={{fontWeight:'500'}}>IMAGINATION</Navbar.Brand>
+                        <Navbar.Brand href="#home" style={{fontWeight:"500"}}>IMAGINATION</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="mr-auto">

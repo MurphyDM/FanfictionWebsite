@@ -65,7 +65,7 @@ module.exports = function (app, router, passport) {
         return res.status(200).json({message: 'User is logged in'});
     });
 
-    app.get('/signout', function (req, res) {
+    app.get('/signout', (req, res) => {
         console.log('***USER:', req.user, req.session, req.sessionID)
         req.logout();
 
@@ -75,42 +75,14 @@ module.exports = function (app, router, passport) {
 
     app.get('/getStories', (req, res) => {
         console.log("/getStories route works:", req.query);
-        if(req.query.key) return storyManager.getStoriesWhere(res, req.query.page||0, req.query.key, req.query.quantity||null);
-        
-        return storyManager.getStories(res, req.query.page||0,  req.query.quantity||null);
-
+        if(req.query.fieldName&&req.query.fieldValue) {
+            console.log("GENRE", req.query.fieldValue)
+            if(req.query.order) toryManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue, req.query.order);
+            else storyManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue);
+        }
+        storyManager.getStories(res);
     });
 
-    app.get('/getStoriesWhere', (req, res) => {
-        console.log("/getStories route works:", req.query.page||0, req.query.key, req.query.quantity||null);
-
-        return storyManager.getStoriesWhere(res, req.query.page||0, req.query.key, req.query.quantity||null);
-
-    });
-    app.get('/getSortedStories', (req, res) => {
-        console.log("/getStories route works:", req.query.page, req.query.order);
-
-        return storyManager.getStories(res, req.query.page, req.query.order, req.query.quantity||null);
-
-    });
-
-    app.post('/photo', (req, res) => {
-        const fs = require('fs');
-        let a = req.body.image;
-        let m = a.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-
-        let b = Buffer.from(m[2], 'base64');
-        fs.writeFile('./' + req.body.name, b, function (err) {
-            if (! err) {
-                res.send(true);
-            } else 
-                res.send(err)
-            
-        });
-
-    });
-
-
-    var auth = require('./auth')(passport, router);
+    var auth = require('./protectedRoutes')(passport, router);
     app.use('/auth', auth);
 };

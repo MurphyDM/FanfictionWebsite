@@ -1,22 +1,22 @@
-import React from 'react'
-import Carousel from 'react-bootstrap/Carousel'
+import React from "react"
+import Carousel from "react-bootstrap/Carousel"
 
 const styles = {
     corousel: {
-        height: '70vh',
-        overflowX: 'scroll',
-        overflowY: 'hidden',
-        whiteSpace: 'nowrap',
-        scroll: 'hidden'
+        height: "70vh",
+        overflowX: "scroll",
+        overflowY: "hidden",
+        whiteSpace: "nowrap",
+        scroll: "hidden"
     },
     carouselItem: {
-        display: 'inline-block',
-        height: '70vh',
-        width: '100vw'
+        display: "inline-block",
+        height: "70vh",
+        width: "100vw"
     },
     img: {
-        height: '70vh',
-        width: '100vw'
+        height: "70vh",
+        width: "100vw"
     }
 }
 
@@ -37,7 +37,7 @@ function Slideshow(props) {
             props.slides.map((slide, i) => {
                 return (
                     <Carousel.Item key = {slide.id}>
-                        <div className='d-flex'>
+                        <div className="d-flex">
                             <Content 
                                 image = { slide.image||"https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder-1024x512.png" } 
                                 caption = { slide.title } 

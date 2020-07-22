@@ -1,14 +1,14 @@
-import React from 'react'
-import axios from 'axios'
+/*import React from "react"
+import axios from "axios"
 
-import { setRomanceStories, setNewestStories, setAdventuresStories, setOriginalStories, setFantasyStories } from '../store/stories/actions'
-import { connect } from 'react-redux';
+import { setRomanceStories, setNewestStories, setAdventuresStories, setOriginalStories, setFantasyStories } from "../store/stories/actions"
+import { connect } from "react-redux";
 
-import Home from './Home'
+import Home from "./Home"
 
 function HomeContainer(props) {
       React.useEffect(() => {
-        axios.get('/getStories', {
+        axios.get("/getStories", {
             params: {
               page: 0,
               quantity: 10
@@ -17,62 +17,62 @@ function HomeContainer(props) {
             props.setNewestStories(response.data);
           })
           .catch((error) => {
-            console.log('error 3 ' + error);
+            console.log("error 3 " + error);
           });
 
-          axios.get('/getStoriesWhere', {
+          axios.get("/getStoriesWhere", {
             params: {
               page: 0,
-              key: 'romance',
+              key: "romance",
               quantity: 10
             }
           }).then(response => {
             props.setRomanceStories(response.data);
           })
           .catch((error) => {
-            console.log('error 3 ' + error);
+            console.log("error 3 " + error);
           });
 
-          axios.get('/getStoriesWhere', {
+          axios.get("/getStoriesWhere", {
             params: {
               page: 0,
-              key: 'adventures',
+              key: "adventures",
               quantity: 10
             }
           }).then(response => {
             props.setAdventuresStories(response.data);
           })
           .catch((error) => {
-            console.log('error 3 ' + error);
+            console.log("error 3 " + error);
           });
 
           //
-          axios.get('/getStoriesWhere', {
+          axios.get("/getStoriesWhere", {
             params: {
               page: 0,
-              key: 'fantasy',
+              key: "fantasy",
               quantity: 10
             }
           }).then(response => {
-            console.log('fantasy: ', response.data)
+            console.log("fantasy: ", response.data)
             props.setFantasyStories(response.data);
           })
           .catch((error) => {
-            console.log('error 3 ' + error);
+            console.log("error 3 " + error);
           });
           //
 
-          axios.get('/getStoriesWhere', {
+          axios.get("/getStoriesWhere", {
             params: {
               page: 0,
-              key: 'original',
+              key: "original",
               quantity: 10
             }
           }).then(response => {
             props.setOriginalStories(response.data);
           })
           .catch((error) => {
-            console.log('error 3 ' + error);
+            console.log("error 3 " + error);
           });
       }, []);
 
@@ -107,3 +107,4 @@ const mapStateToProps = (state) => {
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)
+*/
