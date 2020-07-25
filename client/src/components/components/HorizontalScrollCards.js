@@ -34,7 +34,7 @@ function HorizontalScrollCards(props) {
                                 <Content 
                                     image = { card.image || "https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder-1024x512.png" }
                                     caption = { card.title }
-                                    description = { card.body }
+                                    description = { card.description }
                                     genre = { card.genre }
                                     time = { card.time }
                                     user = { card.userId }
@@ -47,6 +47,7 @@ function HorizontalScrollCards(props) {
                 <div style ={{display: "inline-block", border: "none" }} className="card" key = { 0 }>
                 <div className = " d-flex justify-content-center" style = {styles.lastCard}>
                      <Link to={`/catalog/${props.subpath}`} style = {styles.link}>Show more</Link> 
+                     
                 </div>
                 </div>
             </div>

@@ -3,7 +3,9 @@ import {Form, Button} from "react-bootstrap"
 import axios from "axios"
 import {getJwt} from "../../helpers/getJwt"
 import Alert from "../../helpers/Alert";
+import Dropzone from '../../pages/protected/Dropzone'
 import { uploadImage } from "../../helpers/uploadImage"
+
 const MIN_STORY_SIZE = 500;
 const MIN_STORY_DESCRIPTION_SIZE = 25;
 
@@ -23,6 +25,7 @@ function StoryForm(props) {
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
+        console.log(file)
         setSelectedFile(file);
         setFileInputState(e.target.value);
     };
@@ -45,8 +48,12 @@ function StoryForm(props) {
 
     const submit = (e) => {
         e.preventDefault();
-        if(checkFields()) {
-            console.log(selectedFile)
+        if(!checkFields()) {
+            setErrMsg("Please, fill out all the field in the form corretly (min story size: 500 symbols, min description size: 25 symbols");
+            return;
+        }
+
+        console.log(selectedFile)
         axios.post("/auth/uploadStory", {
             title: storyTitle,
             description: storyDescription,
@@ -57,12 +64,16 @@ function StoryForm(props) {
             }
         }).then(res => {
             console.log(res.data)
+            clearFields();
+            window.scroll(0,100); 
             setSuccessMsg("Story was uploaded successfully");
-            uploadImage(selectedFile, res.data);
-        }).catch(err =>  setErrMsg("Something went wrong!"));
+            uploadImage("/auth/uploadCover", selectedFile, res.data);
+        }).catch((err) =>  {
+            window.scroll(0, 100); 
+            setErrMsg("Something went wrong!");
+        })
     }
-    else setErrMsg("Please, fill out all the field in the form corretly (min story size: 500 symbols, min description size: 25 symbols");
-    }
+    
 
         return (
             <div style={{ margin: "5vh 0 5vh 0" }}>
@@ -73,7 +84,14 @@ function StoryForm(props) {
                     e => submit(e)
                 }>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <input type="file" value={ fileInputState } name="file" onChange={(e)=>handleFileInputChange(e)}/>
+                    <Form.File 
+                        id="custom-file"
+                        name="file"
+                        value={ fileInputState }
+                        label="Custom file input"
+                        onChange={(e)=>handleFileInputChange(e)}
+                        custom
+                    />
                     </Form.Group> 
                     
                     <Form.Group controlId="exampleForm.ControlTextarea2">

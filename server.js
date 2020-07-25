@@ -4,6 +4,7 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const multer = require('multer')
 const morgan = require('morgan'); //?
 const passport = require('passport');
 const port = process.env.PORT || 5000;
@@ -19,11 +20,15 @@ require('./config/auth/passport')(passport);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(bodyParser.raw({type: 'multipart/form-data'}));
+
 app.use(bodyParser.urlencoded({
     extended: true,
     limit: '50mb'
 }));
 app.use(bodyParser.json({limit: '50mb'}));
+
+
 app.use(session({
     secret: 'key',
     resave: true,

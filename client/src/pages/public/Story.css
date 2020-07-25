@@ -1,0 +1,64 @@
+.darkTheme {
+    background-color: rgb(27, 25, 25);
+    color: rgb(189, 189, 189) !important;
+}
+
+li {
+    margin-bottom: 1vh ;
+}
+
+h1 {
+    justify-content: center;
+    margin-bottom: 5vh;
+}
+
+h4 {
+    text-align: center;
+}
+
+.body {
+    margin-top: 7vh;
+    font-family: 'Arial';
+}
+
+.textIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.lightIcon {
+    width: 28px;
+    height: 28px;
+}
+
+.toolbar {
+    background-color: #e6eaee;
+    margin-top: 4vh;
+}
+
+.toolbar.darkTheme {
+    background-color: #494949;
+}
+
+.toolbar.lightTheme {
+    background-color: rgb(245, 245, 245);
+}
+.cover {
+
+    width: 320px;
+    height: 470px;
+}
+
+@media all and (max-width:800px) {
+    .cover {
+        width: 200px;
+        height: 270px
+    }
+
+    .cover-wrapper {
+        background-color: rgb(28, 28, 36);
+        display: flex;
+        justify-content: center;
+        margin-bottom: 4vh;
+    }
+}

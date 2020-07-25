@@ -1,36 +1,41 @@
 import React from "react"
-
-import ProfileHead from "../../components/components/ProfileHead"
-import WorksList from "./WorksListContainer"
+import Alert from '../../helpers/Alert'
+import ProfileHead from "../../components/containers/ProfileHeadContainer"
 import Readinglist from "./ReadingList"
-import WriteStory from "./WriteStory"
-
 import Tabs from "../../components/components/ControlledTabs"
 
-class Profile extends React.Component {
-    render() {
-        const components = [
-            {
-                name: 'Works',
-                component: WorksList
-            },
-            {
-                name: 'Reading list',
-                component: Readinglist
-            },
-            {
-                name: 'Write Story',
-                component: WriteStory
-            }
-        ]
+
+const LazyWriteStoryComponent = React.lazy(() => import("./WriteStory"));
+const LazyWorksListComponent = React.lazy(() => import("./WorksListContainer"));
+
+
+
+function Profile(props) {
+    const components = [
+        {
+            name: 'Works',
+            component: LazyWorksListComponent
+        },
+        {
+            name: 'Reading list',
+            component: Readinglist
+        },
+        {
+            name: 'Write Story',
+            component: LazyWriteStoryComponent
+        }
+    ]
+
         return (
             <>
-                <ProfileHead/>
+            {props.err&&<Alert msg={props.error} type="danger" />}
+            {props.success&&<Alert msg={props.success} type="success" />}
 
+                <ProfileHead/>
                 <Tabs components = {components}/>
+                
             </>
         )
-    }
 }
 
 export default Profile;

@@ -29,6 +29,14 @@
     outline: none;
     border-bottom-color: rgb(136, 140, 143) !important;
 }
+.input.true:focus {
+    outline: none;
+    border-bottom-color: rgb(124, 255, 183) !important;
+}
+.input.false:focus {
+    outline: none;
+    border-bottom-color: rgb(202, 134, 134) !important;
+}
 
  .input:hover {
     border-bottom-color: #b1d0ec;

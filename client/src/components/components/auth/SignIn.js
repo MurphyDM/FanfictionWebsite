@@ -4,61 +4,57 @@ import axios from "axios"
 import Alert from "../../../helpers/Alert"
 import "./auth.css"
 
-class SignIn extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            error: ""
-        };
+function SignIn(props) {
+    const [email, setEmail] = React.useState("");
+    const [isEmailValid, setEmailValidity] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [isPasswordValid, setPasswordValidity] = React.useState("");
+    const [error, setError] = React.useState("");
+
+    const checkEmail = () => {
+        if(email !== ""){
+            let lastAtPos = email.lastIndexOf("@");
+            let lastDotPos = email.lastIndexOf(".");
+ 
+        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf("@@") == -1 && lastDotPos > 2 && (email.length - lastDotPos) > 1))
+            setEmailValidity(false);
+            else setEmailValidity(true);
+        }  
     }
 
-    change(e) {
-        this.setState({[e.target.name]: e.target.value});
+    const checkPassword = () => {
+        if(password !== "")
+        if(password.length < 6)
+            setPasswordValidity(false);
+        else 
+            setPasswordValidity(true);
     }
 
-    handleValidation() {
-        const { error, password, email} = this.state;
-        let formIsValid = true;
-
-        if(!password)
-           formIsValid = false;
-
-        if(!email)
-           formIsValid = false;
-
-        if(typeof email !== "undefined"){
-           let lastAtPos = email.lastIndexOf("@");
-           let lastDotPos = email.lastIndexOf(".");
-
-           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf("@@") == -1 && lastDotPos > 2 && (email.length - lastDotPos) > 2))
-              formIsValid = false;
-       }  
-
-       this.setState({error: true});
-       return formIsValid;
+    const isFormValid = () => {
+        console.log(isEmailValid, isPasswordValid)
+        if (email.length===""||password.length==="") return false;
+        if (!isEmailValid||!isPasswordValid) return false;
+        console.log(isEmailValid, isPasswordValid)
+        return true;
    }
 
-    submit(e) {
+    const submit = (e) => {
         e.preventDefault();
-
-        if(this.handleValidation() === false) {
+        if(!isFormValid()) {
+            setError(true);
+            console.log("incorrect data")
+            e.preventDefault();
             return;
         }
-
         axios.post("/signin", {
-            email: this.state.email,
-            password: this.state.password
+            email: email,
+            password: password
         }).then(res => {
             console.log(res.data)
             localStorage.setItem("jwt", res.data.token);
-            this.props.history.push("/profile")
-        }).catch(() => this.setState({error: true}));
+            if(res.status === 200) props.history.push("/profile")
+        }).catch(() => setError(true));
     }
-
-    render() {
-        const { error, password, email} = this.state;
         return (
             <Row className="align-content-center" 
                 style={
@@ -72,28 +68,36 @@ class SignIn extends React.Component {
                 
                 <h1>Sign in to your account</h1>
                 
-                <Form className = "form-wrapper" onSubmit={e => this.submit(e)}>
+                <Form className = "form-wrapper"
+                    onSubmit = { e => {
+                        submit(e);
+                    }}>
                 {error ? <Alert msg={"Invalid credentials"} type="danger" /> : null}
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Control className = "input"
+                        <Form.Control className = {`input ${isEmailValid}`}
                             type = "email"
                             placeholder = "Enter email address" 
                             name = "email"
                             value = { email }
-                            onChange = {
-                                e => this.change(e)
-                            }/>
+                            onChange = { e => {
+                                checkEmail();
+                                setEmail(e.target.value);
+                            }}/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
-                        <Form.Control className = "input"
+                        <Form.Control className = {`input ${isPasswordValid}`}
                             type = "password" 
                             placeholder="Enter password" 
                             name = "password"
                             value = { password }
                             onChange = {
-                                e => this.change(e)
-                            }/>
+                                e => {
+                                    setPassword(e.target.value);
+                                    checkPassword();
+                                }
+                            }
+                            style={{}}/>
                     </Form.Group>
                     <Button className = "input-button" variant="primary" type="submit">
                         Submit
@@ -102,7 +106,6 @@ class SignIn extends React.Component {
             </Col>
             </Row>
         )
-    }
 }
 
 export default SignIn;

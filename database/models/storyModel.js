@@ -18,11 +18,11 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         description: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false
         },
         body: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false
         },
         genre: {

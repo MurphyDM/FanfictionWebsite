@@ -3,14 +3,10 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { getJwt } from '../../../helpers/getJwt';
 
-class AuthComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: undefined
-    };
-  }
+import {setUser} from '../../../store/user/actions'
+import {connect} from "react-redux";
 
+class AuthComponent extends Component {
   componentDidMount() {
     this.getUser();
   }
@@ -18,7 +14,7 @@ class AuthComponent extends Component {
   getUser() {
     const jwt = getJwt();
     if (!jwt) {
-      this.setState({
+      this.props.setUser({
         user: null
       });
       return;
@@ -27,17 +23,17 @@ class AuthComponent extends Component {
     axios
     .get('/auth/getUser', { headers: { Authorization: getJwt() } 
     }).then(res => {
-        console.log('status', res.status)
-        this.setState({
+        console.log('status', res.data)
+        this.props.setUser({
          user: res.data
         })
-    }).catch(err => this.setState({
+    }).catch(err => this.props.setUser({
         user: null
        }));
   }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props.user;
     if (user === undefined) {
       return (
         <div>
@@ -54,4 +50,12 @@ class AuthComponent extends Component {
   }
 }
 
-export default withRouter(AuthComponent);
+const mapStateToProps = (state) => {
+  return {user: state.user.user}
+}
+
+const mapDispatchToProps = {
+  setUser
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthComponent))

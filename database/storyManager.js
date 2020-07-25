@@ -1,5 +1,5 @@
-const date = require('../date')
-const db = require('../../database/dbConnector');
+const date = require('../config/date')
+const db = require('./dbConnector');
 const Story = db.Story;
 const STORIES_ON_PAGE = 15;
 
@@ -26,7 +26,9 @@ function uploadStory(responce, image, title, description, body, genre, userId) {
 }
 
 function getStories(res) {
-    Story.findAll().then(stories => {
+    Story.findAll({
+        attributes: ['id', 'image', 'title', 'description', 'genre','userId']
+    }).then(stories => {
         console.log("Result: stories were found");
         res.json(stories);
     }).catch(err => {
@@ -35,7 +37,9 @@ function getStories(res) {
 }
 
 function getStoriesWhere(res, fieldName = "genre", fieldValue = "original", order = [['id', 'DESC']] ) {
+    console.log("**METHOD Filter", fieldValue)
     Story.findAll({
+        attributes: ['id', 'image', 'title', 'description', 'genre','userId'],
         where: {
             [fieldName]: fieldValue
         },
@@ -48,6 +52,16 @@ function getStoriesWhere(res, fieldName = "genre", fieldValue = "original", orde
     });
 }
 
+function getStoryByPK(res, primaryKey){
+    Story.findByPk(primaryKey)
+    .then(story => {
+        console.log("Result: ", primaryKey, " story was found");
+        console.log('story', story)
+        res.json(story);
+    }).catch(err => {
+        res.json(null);
+    });
+}
 
 function getSortedStories(res, page, order) {
     let offset = calculateStoriesOffset(page);
@@ -62,7 +76,7 @@ function getSortedStories(res, page, order) {
     });
 }
 
-function updateStory(storyId, fieldName, newValue) {
+function updateStory(responce, storyId, fieldName, newValue) {
     console.log("update story: ", storyId, fieldName, newValue)
     Story.update({ [fieldName]: newValue }, {
         where: {
@@ -70,6 +84,7 @@ function updateStory(storyId, fieldName, newValue) {
         }
       }).then((res) => {
         console.log(res);
+        responce.json({ msg: 'yaya' });
       });
 }
 
@@ -83,10 +98,32 @@ function deleteStory(id) {
     });
 }
 
+/*await sequelize.query(
+    'SELECT * FROM projects WHERE status = ?',
+    {
+      replacements: ['active'],
+      type: QueryTypes.SELECT
+    }
+  );example*/ 
+
+function uploadFile(res, file, id) {
+    console.log("upload works", file)
+    Story.update({ body: file }, {
+        where: {
+          id: id
+        }
+      }).then((result) => {
+        console.log(result);
+        res.send('success');
+      });
+}
+
 module.exports = {
     uploadStory,
     deleteStory,
     getStories, 
     getStoriesWhere, 
-    updateStory
+    getStoryByPK,
+    updateStory, 
+    uploadFile
 }

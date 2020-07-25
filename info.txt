@@ -23,6 +23,14 @@ User.create({
     console.log(users);
   }).catch(err=>console.log(err));
 
+const project = await Project.findByPk(123);
+if (project === null) {
+  console.log('Not found!');
+} else {
+  console.log(project instanceof Project); // true
+  // Its primary key is 123
+}
+
   User.findOne({where: {name: "Tom"}})
   .then(user=>{
     if(!user) return;

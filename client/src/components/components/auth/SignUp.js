@@ -4,109 +4,116 @@ import axios from "axios"
 import Alert from "../../../helpers/Alert"
 import "./auth.css"
 
-class SignUp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            email: "",
-            password: "",
-            error: ""
-        };
-    }
+function SignUp(props) {
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [isEmailValid, setEmailValidity] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [isPasswordValid, setPasswordValidity] = React.useState("");
+    const [error, setError] = React.useState(false);
 
-    change(e) {
-        this.setState({[e.target.name]: e.target.value});
-    }
-
-    handleValidation() {
-        const { error, password, email, username} = this.state;
-        let formIsValid = true;
-
-        if(!username) formIsValid = false;
+    const checkEmail = () => {
+        if(email !== ""){
+            let lastAtPos = email.lastIndexOf("@");
+            let lastDotPos = email.lastIndexOf(".");
  
-        if(!password)
-           formIsValid = false;
+        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf("@@") == -1 && lastDotPos > 2 && (email.length - lastDotPos) > 1))
+            setEmailValidity(false);
+            else setEmailValidity(true);
+        }  
+    }
 
-        if(!email)
-           formIsValid = false;
+    const checkPassword = () => {
+        if(password !== "")
+        if(password.length < 6)
+            setPasswordValidity(false);
+        else 
+            setPasswordValidity(true);
+    }
 
-        if(typeof email !== "undefined"){
-           let lastAtPos = email.lastIndexOf("@");
-           let lastDotPos = email.lastIndexOf(".");
-
-           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf("@@") == -1 && lastDotPos > 2 && (email.length - lastDotPos) > 2))
-              formIsValid = false;
-       }  
-
-       this.setState({error: true});
-       return formIsValid;
+    const isFormValid = () => {
+        console.log(isEmailValid, isPasswordValid)
+        if (email.length===""||password.length===""||username.length==="") return false;
+        if (!isEmailValid||!isPasswordValid) return false;
+        console.log(isEmailValid, isPasswordValid)
+        return true;
    }
 
-    submit(e) {
+    const submit = (e) => {
         e.preventDefault();
-        if(this.handleValidation === false) return;
-
-        console.log(this.state)
+        if(!isFormValid()) {
+            setError(true);
+            console.log("incorrect data")
+            e.preventDefault();
+            return;
+        }
         axios.post("/signup", {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password
+            username: username,
+            email: email,
+            password: password
         }).then(res => {
             console.log(res.data)
-            this.props.history.push("/signin")
-        }).catch(() => this.setState({error: true}));
+            localStorage.setItem("jwt", res.data.token);
+            if(res.status === 200) props.history.push("/signin")
+        }).catch(() => setError(true));
     }
-
-    render() {
-        const { error, username, password, email} = this.state;
         return (
             <Row className="align-content-center" 
-            style={
-                { marginTop: "15vh" }
-            }>
+                style={
+                    { marginTop: "15vh" }
+                }>
 
-        <Col className="d-block text-center justify-content-center"
-            lg={{ span: 4, offset: 4 }} 
-            md={{ span: 6, offset: 3 }} 
-            sm={{ span: 10, offset: 1 }} >
-
-                <h1>Create an account</h1>
-                <Form className = "form-wrapper" onSubmit={e => this.submit(e)}>
-        
+            <Col className="d-block text-center justify-content-center"
+                lg={{ span: 4, offset: 4 }} 
+                md={{ span: 6, offset: 3 }} 
+                sm={{ span: 10, offset: 1 }}  >
+                
+                <h1>create an account</h1>
+                
+                <Form className = "form-wrapper"
+                    onSubmit = { e => {
+                        submit(e);
+                    }}>
                 {error ? <Alert msg={"Invalid credentials"} type="danger" /> : null}
-
-                    <Form.Group controlId="formBasicUserName">
-                        <Form.Control className = "input" 
-                            type = "username" 
+                <Form.Group controlId="formBasicUsername">
+                        <Form.Control className = {`input`}
+                            type = "username"
                             placeholder = "Enter username" 
                             name = "username"
                             value = { username }
-                            onChange = {
-                                e => this.change(e)
-                            }/>
+                            onChange = { e => {
+                                setUsername(e.target.value);
+                            }}/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Control className = "input" 
-                            type = "email" 
-                            placeholder = "Enter email" 
+                        <Form.Control className = {`input ${isEmailValid}`}
+                            type = "email"
+                            placeholder = "Enter email address" 
                             name = "email"
                             value = { email }
-                            onChange = {
-                                e => this.change(e)
-                            }/>
+                            onChange = { e => {
+                                checkEmail();
+                                setEmail(e.target.value);
+                            }}/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
-                        <Form.Control className = "input" 
+                        <Form.Control className = {`input ${isPasswordValid}`}
                             type = "password" 
-                            placeholder="Password" 
+                            placeholder="Enter password" 
                             name = "password"
                             value = { password }
                             onChange = {
-                                e => this.change(e)
-                            }/>
+                                e => {
+                                    setPassword(e.target.value);
+                                    checkPassword();
+                                }
+                            }
+                            style={{}}/>
+                             <Form.Text id="passwordHelpBlock" muted>
+                                Must be 7 or more characters long.
+                            </Form.Text>
                     </Form.Group>
                     <Button className = "input-button" variant="primary" type="submit">
                         Submit
@@ -116,7 +123,6 @@ class SignUp extends React.Component {
             </Col>
             </Row>
         )
-    }
 }
 
 export default SignUp;

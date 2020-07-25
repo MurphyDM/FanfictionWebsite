@@ -3,7 +3,7 @@ import {
 } from "./actions";
 
 const initialState = {
-    newestStories: []
+    user: {}
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -14,7 +14,6 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload
             };
-
         default:
             return state;
     }

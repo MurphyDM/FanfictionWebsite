@@ -1,6 +1,6 @@
 const jwtsecret = "mysecretkey"; // signing key for JWT
 const jwt = require('jsonwebtoken'); // auth via JWT for hhtp
-const storyManager = require("../config/storiesTable/storyManager")
+const storyManager = require("../database/storyManager");
 
 module.exports = function (app, router, passport) {
 
@@ -76,11 +76,15 @@ module.exports = function (app, router, passport) {
     app.get('/getStories', (req, res) => {
         console.log("/getStories route works:", req.query);
         if(req.query.fieldName&&req.query.fieldValue) {
-            console.log("GENRE", req.query.fieldValue)
-            if(req.query.order) toryManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue, req.query.order);
+            if(req.query.order) storyManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue, req.query.order);
             else storyManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue);
         }
         storyManager.getStories(res);
+    });
+
+    app.get('/getStoryByPK', (req, res) => {
+        console.log("/getStoryByPK route works:", req.query);
+        storyManager.getStoryByPK(res, req.query.primary, req.query.page);
     });
 
     var auth = require('./protectedRoutes')(passport, router);

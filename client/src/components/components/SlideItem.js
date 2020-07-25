@@ -30,9 +30,6 @@ class SliderItem extends React.Component {
                 <h3>{
                      this.props.caption
                 }</h3>
-                <p>{
-                     this.props.description
-                }</p>
             </Carousel.Caption>
             </>
         )

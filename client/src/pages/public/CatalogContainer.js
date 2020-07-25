@@ -8,20 +8,19 @@ import {getJwt} from "../../helpers/getJwt"
 import Catalog from "./Catalog"
 
 function MediaListContainer(props) {
-    const [genre, setGenre] = React.useState(props.genre||"");
-    console.log("genre", genre)
+    const [genre, setGenre] = React.useState(props.match.params.genre||"");
     
     let params = {};
     if (genre != "") {
-    console.log("!genre", genre)
+    console.log("genre", genre)
         params = {
             fieldName: "genre",
-            filedValue: genre
+            fieldValue: genre
         }
       }
 
     React.useEffect(() => {
-      console.log("params", params)
+      console.log("Params", params)
         axios.get("/getStories", {
           params: params
         }, { headers: {

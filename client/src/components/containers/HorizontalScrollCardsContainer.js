@@ -18,6 +18,7 @@ function HorizontalScrollCardsContainer(props) {
         axios.get("/getStories", {
             params: params
         }).then(response => {
+            console.log('responce:', response.data)
             setStories(response.data);
         }).catch((error) => {
             console.log("cant\"t get stories by genre " + error);
@@ -25,10 +26,11 @@ function HorizontalScrollCardsContainer(props) {
     }, []);
 
     return (
-        ((stories!==null)&&(stories.length > 0)) ?
+        ((stories)&&(stories.length !== 0)) ?
         <>
             <h1> {props.genre} stories</h1>
-            <HorizontalScrollCards  style = { { marginBottom: "3vh" } } cards={stories}
+            <HorizontalScrollCards style = {{ marginBottom: "3vh" }} 
+                cards={stories}
                 content={CardItem}
                 subpath={
                 props.genre

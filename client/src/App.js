@@ -5,14 +5,14 @@ import {createStore} from "redux"
 import {Provider} from "react-redux"
 import rootReducer from "./store/rootReducer"
 
-import Header from "./components/components/Header"
+import Header from "./components/containers/HeaderContainer"
 import Home from "./pages/public/Home"
 import SignIn from "./components/components/auth/SignIn"
 import SignUp from "./components/components/auth/SignUp"
 import Profile from "./pages/protected/Profile"
 import AuthenticatedComponent from "./components/components/auth/AuthenticatedComponent"
 import Catalog from "./pages/public/CatalogContainer"
-import Story from "./pages/public/Story"
+import Story from "./pages/public/StoryContainer"
 
 
 const store = createStore(rootReducer);
@@ -36,9 +36,9 @@ function App() {
                         component={SignIn}/>
                     <Route path="/signup"
                         component={SignUp}/>
-                         <Route exact path="/catalog"
+                    <Route exact path="/catalog/:genre?"
                         component={Catalog}/>
-                         <Route exact path="/catalog/:storyId"
+                    <Route exact path="/story/:storyId"
                         component={Story}/>
                     <AuthenticatedComponent>
                         <Route path="/profile"

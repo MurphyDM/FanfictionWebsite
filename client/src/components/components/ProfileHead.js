@@ -1,5 +1,5 @@
 import React from "react"
-import {Row, Col, Container, Image} from "react-bootstrap"
+import {Row, Col, Container, Image, Button} from "react-bootstrap"
 
 const PLACEHOLDER_AVATAR = "https://media.istockphoto.com/vectors/default-avatar-profile-icon-gray-placeholder-photo-vector-id844060994?k=6&m=844060994&s=170667a&w=0&h=gqrpuJ3y31Kj1v3CA95g5Mo0ObxwAVf_Efu9nwc9cHs=";
 const styles = {
@@ -12,6 +12,7 @@ const styles = {
     },
     row: {
         height: "40vh",
+        minHeight: "250px",
         backgroundColor: "#395e77"
     },
     link: {
@@ -27,7 +28,7 @@ const styles = {
     }
 }
 
-function ProfileHead() {
+function ProfileHead(props) {
     const [textColor, setTextColor] = React.useState("white");
     const [backgroundColor, setBackgroundColor] = React.useState("#395e77");
     const [avatar, setAvatar] = React.useState(PLACEHOLDER_AVATAR);
@@ -60,16 +61,22 @@ function ProfileHead() {
                             offset: 3
                         }
                 }>
-                    <Image src={PLACEHOLDER_AVATAR}
+                    <Image src={props.avatar||PLACEHOLDER_AVATAR}
                         roundedCircle
                         className="d-block mx-auto"
                         style={
                             styles.img
                         }/>
+                        <Button style={{background: 'none', border: 'none', color: 'gray'}}
+                    className='justify-content-end' 
+                    onClick={()=>props.changeMode()}>
+                        edit profile
+                 </Button>
+
                     <h3 style={
                         styles.name
                     }>
-                        User name
+                        {props.username}
                     </h3>
                 </Col>
             </Row>
