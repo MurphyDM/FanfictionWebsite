@@ -35,7 +35,7 @@ module.exports = (passport, router) => {
     router.get('/getUserStories', (req, res) => {
         console.log("/getUserStories route works:");
         console.log("User id #: ", req.header);
-        return storyManager.getStoriesWhere(res, "userId", parseInt(req.header) );
+        return storyManager.getStories(res, "userId", parseInt(req.header) );
 
     });
 

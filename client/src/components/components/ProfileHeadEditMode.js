@@ -19,9 +19,9 @@ const styles = {
   img: {
     width: "10vw",
     height: "10vw",
-    "-webkit-box-shadow": "0px -1px 39px -4px rgba(7,1,107,1)",
-    "-moz-box-shadow": "0px -1px 39px -4px rgba(7,1,107,1)",
-    "box-shadow": "0px -1px 39px -4px rgba(7,1,107,1)",
+    WebkitBoxShadow: "0px -1px 39px -4px rgba(7,1,107,1)",
+    MozBoxShadow: "0px -1px 39px -4px rgba(7,1,107,1)",
+    BoxShadow: "0px -1px 39px -4px rgba(7,1,107,1)",
   },
   row: {
     height: "40vh",

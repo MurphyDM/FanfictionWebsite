@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { getJwt } from "../../../helpers/getJwt";
@@ -6,63 +6,49 @@ import { getJwt } from "../../../helpers/getJwt";
 import { setUser } from "../../../store/user/actions";
 import { connect } from "react-redux";
 
-class AuthComponent extends Component {
-  componentDidMount() {
-    this.getUser();
-  }
+function AuthComponent(props) {
 
-  getUser() {
-    const jwt = getJwt();
-    if (!jwt) {
-      this.props.setUser({
-        user: null,
-      });
-      return;
-    }
-
-    axios
-      .get("/auth/getUser", { headers: { Authorization: getJwt() } })
-      .then((res) => {
-        console.log("status", res.data);
-        this.props.setUser({
-          user: res.data,
-        });
-        this.saveUserData(res.data.id, res.data.name, res.data.avatar);
-      })
-      .catch((err) =>
-        this.props.setUser({
+  React.useEffect(()=> {
+      const jwt = getJwt();
+      console.log(jwt)
+      if (!jwt) {
+        props.setUser({
           user: null,
+        });
+        return;
+      }
+      axios.get("/auth/getUser", { headers: { Authorization: getJwt() } })
+        .then((res) => {
+          console.log("status", res.data);
+          props.setUser( {
+            user: res.data,
+          });
         })
-      );
-  }
+        .catch((err) =>
+          props.setUser({
+            user: null,
+          })
+        );
+  }, []);
 
-  saveUserData(id, name, avatar) {
-    window.sessionStorage.setItem("name", name);
-    window.sessionStorage.setItem("id", id);
-    window.sessionStorage.setItem("avatar", avatar);
-  }
-  render() {
-    const { user } = this.props.user;
-    if (user === undefined) {
+  console.log(props.user)
+      if (props.user === undefined) {
       return <div>Loading...</div>;
     }
 
-    if (user === null) {
-      this.props.history.push("/signin");
+    if (props.user === null) {
+      props.history.push("/signin");
     }
 
-    return this.props.children;
-  }
+    return props.children;
 }
 
 const mapStateToProps = (state) => {
-  return { user: state.user.user };
+  return { user: state.user.user.user };
 };
 
 const mapDispatchToProps = {
-  setUser,
+  setUser
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AuthComponent)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthComponent));

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -15,13 +16,13 @@ class Header extends React.Component {
         <Navbar fixed="top" collapseOnSelect expand="md" bg="light">
           <Container fluid>
             <Navbar.Brand href="#home" style={{ fontWeight: "500" }}>
-              IMAGINATION
+               IMAGINATION
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/Catalog">Catalog</Nav.Link>
+                <Nav.Item><Link to="/">Home</Link></Nav.Item>
+                <Nav.Item><Link to="/Catalog">Catalog</Link></Nav.Item>
               </Nav>
               <Nav className="ml-auto">
                 <Form inline>
@@ -30,10 +31,10 @@ class Header extends React.Component {
                     placeholder="Search"
                     className="mr-sm-2"
                   />
-                  <Button variant="outline-success">Search</Button>
+                  <Button style={{border:'none'}} variant="outline-success">Search</Button>
                 </Form>
-                <Nav.Link href="/SignIn">Sign In</Nav.Link>
-                <Nav.Link href="/SignUp">Sign Up</Nav.Link>
+                <Nav.Item style={{padding:'6px 0.5vw'}}><Link to="/SignIn">Sign In</Link></Nav.Item>
+                <Nav.Item style={{padding:'6px 0.5vw'}}><Link to="/SignUp">Sign Up</Link></Nav.Item>
               </Nav>
             </Navbar.Collapse>
           </Container>

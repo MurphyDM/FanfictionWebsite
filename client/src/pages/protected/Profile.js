@@ -2,7 +2,8 @@ import React from "react";
 import Alert from "../../helpers/Alert";
 import ProfileHead from "../../components/containers/ProfileHeadContainer";
 import Tabs from "../../components/components/ControlledTabs";
-
+import Header from "../../components/containers/HeaderContainer";
+import ReadingList from "./ReadingList"
 const LazyReadingListComponent = React.lazy(() =>
   import("./ReadingListContainer")
 );
@@ -27,9 +28,7 @@ function Profile(props) {
 
   return (
     <>
-      {props.err && <Alert msg={props.error} type="danger" />}
-      {props.success && <Alert msg={props.success} type="success" />}
-
+     <Header/>
       <ProfileHead />
       <Tabs components={components} />
     </>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -39,8 +40,8 @@ class AuthHeader extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/Catalog">Catalog</Nav.Link>
+               <Nav.Item><Link to="/">Home</Link> </Nav.Item>
+               <Nav.Item> <Link to="/Catalog">Catalog</Link> </Nav.Item>
               </Nav>
               <Nav className="ml-auto">
                 <Form inline>
@@ -67,9 +68,9 @@ class AuthHeader extends React.Component {
                     />
                   </Dropdown.Toggle>
                   <Dropdown.Menu style={{ minWidth: "3rem" }}>
-                    <Dropdown.Item style={{ padding: "5px" }} href="/Profile">
-                      Profile
-                    </Dropdown.Item>
+                    <Nav.Item style={{ padding: "5px" }}>
+                      <Link to="/Profile">Profile</Link>
+                    </Nav.Item>
                     <Dropdown.Item
                       style={{ padding: "5px" }}
                       href="#"

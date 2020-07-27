@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Alert from "../../../helpers/Alert";
+import Header from '../../containers/HeaderContainer'
 import "./auth.css";
 
 function SignUp(props) {
@@ -68,6 +69,8 @@ function SignUp(props) {
       .catch(() => setError(true));
   };
   return (
+    <>
+    <Header />
     <Row className="align-content-center" style={{ marginTop: "15vh" }}>
       <Col
         className="d-block text-center justify-content-center"
@@ -140,6 +143,7 @@ function SignUp(props) {
         </p>
       </Col>
     </Row>
+    </>
   );
 }
 

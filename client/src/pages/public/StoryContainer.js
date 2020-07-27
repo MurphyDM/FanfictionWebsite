@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
+import Header from '../../components/containers/HeaderContainer'
 import { setNewestStories } from "../../store/stories/actions";
 import { setUser } from "../../store/user/actions";
 import { connect } from "react-redux";
@@ -52,7 +53,7 @@ function StoryContainer(props) {
         }
       )
       .then((response) => {
-        console.log([response.data]);
+        console.log(response.data);
         console.log("ID", response.data.id);
         if (localStorage.getItem(response.data.id)) setIsStarted(true);
         props.setNewestStories(response.data);
@@ -62,7 +63,8 @@ function StoryContainer(props) {
       });
   }, []);
 
-  React.useEffect((props) => {
+  React.useEffect(() => {
+    console.log(props.newestStories)
     if (isContinue)
       dispatch({
         type: "setPageNumber",
@@ -117,6 +119,7 @@ function StoryContainer(props) {
 
   return (
     <>
+    <Header/>
       {props.newestStory !== null ? (
         <>
           <Story

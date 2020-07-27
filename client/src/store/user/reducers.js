@@ -4,7 +4,7 @@ import {
 } from "./actions";
 
 const initialState = {
-    user: window.sessionStorage.getItem('user')||{},
+    user: {},
     userReadingList: []
 }
 

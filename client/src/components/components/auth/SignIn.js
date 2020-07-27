@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Alert from "../../../helpers/Alert";
+import Header from '../../containers/HeaderContainer'
 import "./auth.css";
 
 function SignIn(props) {
@@ -60,12 +61,13 @@ function SignIn(props) {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("jwt", res.data.token);
-        if (res.status === 200 || res.status === 304)
-          props.history.push("/profile");
+        if (res.status == 200 || res.status == 304) props.history.push("/profile");
       })
       .catch(() => setError(true));
   };
   return (
+    <>
+    <Header />
     <Row className="align-content-center" style={{ marginTop: "15vh" }}>
       <Col
         className="d-block text-center justify-content-center"
@@ -116,6 +118,7 @@ function SignIn(props) {
         </Form>
       </Col>
     </Row>
+    </>
   );
 }
 

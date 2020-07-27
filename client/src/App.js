@@ -5,7 +5,6 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./store/rootReducer";
 
-import Header from "./components/containers/HeaderContainer";
 import Home from "./pages/public/Home";
 import SignIn from "./components/components/auth/SignIn";
 import SignUp from "./components/components/auth/SignUp";
@@ -27,7 +26,6 @@ function noselect() {
 function App() {
   return (
     <Provider store={store}>
-      <Header />
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />

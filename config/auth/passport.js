@@ -61,7 +61,7 @@ module.exports = function (passport) {
                     password: password,
                     sign_up_date: date.getDateString(),
                     last_sign_in_date: date.getDateString(),
-                    status: 'inactive'
+                    status: 'active' //u should create email
                 }).then(res => {
                     const user = {
                         id: res.id,

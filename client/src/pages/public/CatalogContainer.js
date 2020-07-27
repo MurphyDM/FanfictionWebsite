@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 
+import Header from '../../components/containers/HeaderContainer'
 import { setNewestStories } from "../../store/stories/actions";
 import { connect } from "react-redux";
 import { getJwt } from "../../helpers/getJwt";
@@ -41,11 +42,14 @@ function MediaListContainer(props) {
       });
   }, [genre]);
 
-  return props.newestStories ? (
-    <Catalog stories={props.newestStories} genre={genre} setGenre={setGenre} />
-  ) : (
+  return (
+    <>
+    <Header />
+    props.newestStories ? (
+    <Catalog stories={props.newestStories} genre={genre} setGenre={setGenre} />) : 
     <h2>You don"t have stories</h2>
-  );
+    </>
+    )
 }
 
 const mapStateToProps = (state) => {
