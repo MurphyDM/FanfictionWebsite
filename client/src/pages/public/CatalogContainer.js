@@ -19,7 +19,7 @@ function MediaListContainer(props) {
     };
   }
 
-  React.useEffect((props) => {
+  React.useEffect(() => {
     console.log("Params", params);
     axios
       .get(

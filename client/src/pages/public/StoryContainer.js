@@ -36,7 +36,7 @@ function StoryContainer(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [book, setBook] = React.useState([]);
 
-  React.useEffect((props) => {
+  React.useEffect(() => {
     axios
       .get(
         "/getStoryByPK",

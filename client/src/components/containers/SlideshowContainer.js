@@ -7,14 +7,11 @@ import SlideItem from "../components/SlideItem";
 function SlideshowContainer(props) {
   const [slides, setSlides] = React.useState(null);
 
-  React.useEffect((props) => {
+  React.useEffect(() => {
     axios
       .get("/getStories", {
         params: {
-          page: 0,
-          quantity: 3,
-          key: null,
-          sort: null,
+          limit: 3
         },
       })
       .then((response) => {

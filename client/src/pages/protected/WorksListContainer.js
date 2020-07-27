@@ -8,7 +8,7 @@ import { getJwt } from "../../helpers/getJwt";
 import WorksList from "./WorksList";
 
 function WorksListContainer(props) {
-  React.useEffect((props) => {
+  React.useEffect(() => {
     axios
       .get("/auth/getUserStories", {
         headers: {
