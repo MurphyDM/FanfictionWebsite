@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom';
-import { getJwt } from '../../../helpers/getJwt';
+import React, { Component } from "react";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { getJwt } from "../../../helpers/getJwt";
 
-import {setUser} from '../../../store/user/actions'
-import {connect} from "react-redux";
+import { setUser } from "../../../store/user/actions";
+import { connect } from "react-redux";
 
 class AuthComponent extends Component {
   componentDidMount() {
@@ -15,42 +15,40 @@ class AuthComponent extends Component {
     const jwt = getJwt();
     if (!jwt) {
       this.props.setUser({
-        user: null
+        user: null,
       });
       return;
     }
-    
+
     axios
-    .get('/auth/getUser', { headers: { Authorization: getJwt() } 
-    }).then(res => {
-        console.log('status', res.data)
+      .get("/auth/getUser", { headers: { Authorization: getJwt() } })
+      .then((res) => {
+        console.log("status", res.data);
         this.props.setUser({
-         user: res.data
-        })
+          user: res.data,
+        });
         this.saveUserData(res.data.id, res.data.name, res.data.avatar);
-    }).catch(err => this.props.setUser({
-        user: null
-       }));
+      })
+      .catch((err) =>
+        this.props.setUser({
+          user: null,
+        })
+      );
   }
 
   saveUserData(id, name, avatar) {
-    window.sessionStorage.setItem('name', name);
-    window.sessionStorage.setItem('id', id);
-    window.sessionStorage.setItem('avatar', avatar);
+    window.sessionStorage.setItem("name", name);
+    window.sessionStorage.setItem("id", id);
+    window.sessionStorage.setItem("avatar", avatar);
   }
-  
   render() {
     const { user } = this.props.user;
     if (user === undefined) {
-      return (
-        <div>
-          Loading...
-        </div>
-      );
+      return <div>Loading...</div>;
     }
 
     if (user === null) {
-      this.props.history.push('/signin');
+      this.props.history.push("/signin");
     }
 
     return this.props.children;
@@ -58,11 +56,13 @@ class AuthComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {user: state.user.user}
-}
+  return { user: state.user.user };
+};
 
 const mapDispatchToProps = {
-  setUser
-}
+  setUser,
+};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthComponent))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AuthComponent)
+);
