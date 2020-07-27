@@ -13,15 +13,13 @@ import Profile from "./pages/protected/Profile"
 import AuthenticatedComponent from "./components/components/auth/AuthenticatedComponent"
 import Catalog from "./pages/public/CatalogContainer"
 import Story from "./pages/public/StoryContainer"
-
+import Comment from "./pages/public/CommentsContainer"
+import Admin from "./pages/private/Admin"
 
 const store = createStore(rootReducer);
 document.ondragstart = noselect;
-// запрет на перетаскивание
 document.onselectstart = noselect;
-// запрет на выделение элементов страницы
 document.oncontextmenu = noselect;
-// запрет на выведение контекстного меню
 function noselect() {return false;}
 
 function App() {
@@ -40,10 +38,14 @@ function App() {
                         component={Catalog}/>
                     <Route exact path="/story/:storyId"
                         component={Story}/>
+                    <Route exact path="/comments/:storyId"
+                        component={Comment}/>
                     <AuthenticatedComponent>
-                        <Route path="/profile"
+                        <Route exact path="/profile"
                             component={Profile}/>
-                    </AuthenticatedComponent>
+                        <Route exact path="/administrator"
+                        component={Admin}/>
+                    </AuthenticatedComponent>       
                 </Switch>
             </Router>
         </Provider>

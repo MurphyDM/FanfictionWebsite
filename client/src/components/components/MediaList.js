@@ -44,7 +44,7 @@ function MediaList(props) {
         <>
         <ul className="list-unstyled">
             { props.stories.map((story, i) => {
-                let descriptionText = story.description;
+                let descriptionText = story.description||story.body||"";
                 if(descriptionText.length > MAX_DESCRIPTION_SIZE){
                     descriptionText = descriptionText.slice(0, MAX_DESCRIPTION_SIZE) + " ...";
                 }
@@ -61,7 +61,7 @@ function MediaList(props) {
                         <Media.Body>
                             <h4 style={styles.title}> { story.title } </h4>
                             <p style={styles.genre}>
-                                {story.genre}
+                                {story.genre||""}
                             </p>
                             <p style={styles.description}>
                                 { descriptionText }

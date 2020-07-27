@@ -3,6 +3,7 @@ import axios from "axios"
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
 import {setNewestStories} from "../../store/stories/actions"
+import {setUser} from "../../store/user/actions"
 import {connect} from "react-redux";
 import {getJwt} from "../../helpers/getJwt"
 
@@ -66,6 +67,7 @@ function StoryContainer(props) {
 
     const addPage = () => {
       console.log("NUMBER P:", state.pageNumber)
+      if(props.user&&state.pageNumber===2) addStoryToReadingList();
       if(props.newestStories.body) {
       console.log('add page method');
       let startSymbol = (state.pageNumber) * PAGE_SIZE;
@@ -77,6 +79,20 @@ function StoryContainer(props) {
       dispatch({type: 'incrementPageNumber'})
       console.log('****PAGE*****', book);
       }
+    }
+
+    const addStoryToReadingList = () => {
+      axios.post("/auth/addToReadingList",{
+        storyId: props.newestStories.id
+      }, { 
+        headers: {
+              Authorization: getJwt()
+              }
+          }).then(response => {
+              console.log("stroy was added to the reading list", response);
+          }).catch((error) => {
+              console.log("result: can\"t get reading list" + error);
+          });
     }
 
     return(<>
@@ -96,11 +112,15 @@ function StoryContainer(props) {
 }
 
 const mapStateToProps = (state) => {
-    return {newestStories: state.stories.newestStories}
+    return {
+      newestStories: state.stories.newestStories,
+      user: state.user.user  
+    }
 }
 
 const mapDispatchToProps = {
-    setNewestStories
+    setNewestStories,
+    setUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryContainer)

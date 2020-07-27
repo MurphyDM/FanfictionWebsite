@@ -1,9 +1,11 @@
 import {
-    CHANGE_USER
+    CHANGE_USER, 
+    CHANGE_USER_READING_LIST
 } from "./actions";
 
 const initialState = {
-    user: {}
+    user: window.sessionStorage.getItem('user')||{},
+    userReadingList: []
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -13,6 +15,11 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload
+            };
+            case CHANGE_USER_READING_LIST:
+            return {
+                ...state,
+                userReadingList: action.payload
             };
         default:
             return state;

@@ -1,5 +1,5 @@
 import React from "react"
-import {Container, Row, Col, Image, Table, Nav} from "react-bootstrap"
+import {Container, Row, Col, Image, Table, Nav, Button} from "react-bootstrap"
 import ModalWindow from './ModalWindow'
 import './Story.css';
 import IncreaseFontIcon from '../../images/increase_font.png'
@@ -31,11 +31,12 @@ console.log(props)
         <Container fluid className = {props.light}>
             <Container style={{marginTop: "56px"}}>
                 <Row style={{paddingTop: "30px"}}>
-                    <Col className = "cover-wrapper "  
+                    <Col className = "cover-wrapper"  
                         lg={{ span: 4, offset: 0}} 
                         md={3} 
                         sm={{ span: 4, offset: 4}} >
                     <Image className = "cover" src={props.story.image||BOOK_COVER_PLACEHOLDER} rounded  />
+                  
                     </Col>
                     <Col lg={{ span: 7, offset: 1 }} sm={{ span: 8, offset: 2}}>
                         <h4>Info</h4>
@@ -62,8 +63,10 @@ console.log(props)
                              <td>...</td>
                         </tr>
                         <tr>
-                            <th>Title:</th>
-                             <td> ...</td>
+                            <th>Comments:</th>
+                             <td> 
+                                 <a className="comments" href={`/Comments/${props.story.id}`}> Show comments </a>
+                             </td>
                         </tr>
                         </tbody>
                         </Table>

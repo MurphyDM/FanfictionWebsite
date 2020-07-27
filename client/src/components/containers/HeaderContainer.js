@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 
 import {setUser} from '../../store/user/actions'
 import {connect} from "react-redux";
+import {getJwt} from '../../helpers/getJwt'
 
 import Header from '../components/Header'
 import AuthHeader from '../components/AuthHeader'
 
 function HeaderContainer(props){
-    return (props.user)?<AuthHeader avatar={props.user.avatar}/>: <Header/>   
+  const logout = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    window.location.reload();
+  }
+    return getJwt()?<AuthHeader avatar={window.sessionStorage.getItem('avatar')} logout = {logout}/>: <Header/>   
 }
 
 const mapStateToProps = (state) => {

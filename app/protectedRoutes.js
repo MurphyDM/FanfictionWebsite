@@ -1,6 +1,8 @@
 var express = require('express');
-const storyManager = require("../database/storyManager");
+const storyManager = require("../database/storiesManager");
 const usersManager = require("../database/usersManager");
+const commentsManager = require("../database/commentsManager");
+const readingListsManager = require("../database/readingListsManager")
 const cloudinary = require("../cloudinary/cloudinary");
 
 module.exports = (passport, router) => {
@@ -8,7 +10,8 @@ module.exports = (passport, router) => {
     router.use(function checkAuth(req, res, next) {
         passport.authenticate('jwt', function (err, user) {
             if (user) {
-                console.log("hello" + user.name);
+                console.log("hello" + user.name + 'your status is' + user.status);
+                if(user.status === 'inactive') res.send('You need to confirm your email!');
                 req.header = user.id;
                 next();
             } else {
@@ -20,7 +23,6 @@ module.exports = (passport, router) => {
 
     router.get('/getUser', (req, res) => {
         passport.authenticate('jwt', function (err, user) {
-
                 res.json({
                     id: user.id,
                     name: user.name,
@@ -77,10 +79,37 @@ module.exports = (passport, router) => {
 
     router.post('/changeUsername', async (req, res) => {
         console.log('New username: ', req.body.newName);
-        usersManager.updateUser(res, req.header, 'name', req.body.newName)
+        usersManager.updateUser(res, req.header, 'name', req.body.newName);
     });
 
+    router.post('/addComment', async (req, res) => {
+        console.log('/addComment', req.body);
+        commentsManager.addComment(res, req.header, req.body.storyId, req.body.commentBody);
+    });
 
+    router.post('/deleteComment', async (req, res) => {
+        console.log('/deleteComment', req.body);
+        commentsManager.deleteComment(res, req.header, req.body.commentId);
+    });
+
+    router.post('/addToReadingList', async (req, res) => {
+        console.log('/addToReadingList', req.body);
+        readingListsManager.addToReadingList(res, req.header, req.body.storyId)
+    });
+
+    router.post('/deleteFromReadingList', async (req, res) => {
+        console.log('/deleteFromReadingList', req.body);
+        readingListsManager.deleteFromReadingList(res, req.header, req.body.storyId)
+    });
+
+    router.get('/getReadingList', async (req, res) => {
+        console.log('/getReadingList', req.query);
+        readingListsManager.getReadingList(res, req.header)
+    });
+
+    var admin = require('./privateRoutes')(passport, router);
+    router.use('/admin', admin);
+    
     return router;
 }
 

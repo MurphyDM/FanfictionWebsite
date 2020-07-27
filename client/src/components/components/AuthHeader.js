@@ -51,7 +51,7 @@ class AuthHeader extends React.Component {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu style={{minWidth: '3rem'}}>
                                       <Dropdown.Item style={{padding: '5px'}} href="/Profile">Profile</Dropdown.Item>
-                                      <Dropdown.Item style={{padding: '5px'}} href="#">Sign out</Dropdown.Item>
+                                      <Dropdown.Item style={{padding: '5px'}} href="#" onClick={()=> this.props.logout()}>Sign out</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
 

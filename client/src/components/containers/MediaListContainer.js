@@ -8,6 +8,8 @@ import { getJwt } from "../../helpers/getJwt"
 import MediaList from "../components/MediaList"
 
 function MediaListContainer(props) {
+
+
       React.useEffect(() => {
             axios.get(props.url, { headers: { 
               Authorization: getJwt() 
@@ -22,7 +24,9 @@ function MediaListContainer(props) {
 
         return (
             props.newestStories ?
-                <MediaList stories = { props.newestStories } /> :
+                <MediaList 
+                  stories = { props.newestStories } 
+                /> :
                 <h2>You don"t have stories</h2>
         )
 }

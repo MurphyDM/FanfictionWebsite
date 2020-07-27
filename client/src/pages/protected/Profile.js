@@ -1,14 +1,11 @@
 import React from "react"
 import Alert from '../../helpers/Alert'
 import ProfileHead from "../../components/containers/ProfileHeadContainer"
-import Readinglist from "./ReadingList"
 import Tabs from "../../components/components/ControlledTabs"
 
-
+const LazyReadingListComponent = React.lazy(() => import("./ReadingListContainer"));
 const LazyWriteStoryComponent = React.lazy(() => import("./WriteStory"));
 const LazyWorksListComponent = React.lazy(() => import("./WorksListContainer"));
-
-
 
 function Profile(props) {
     const components = [
@@ -18,7 +15,7 @@ function Profile(props) {
         },
         {
             name: 'Reading list',
-            component: Readinglist
+            component: LazyReadingListComponent
         },
         {
             name: 'Write Story',

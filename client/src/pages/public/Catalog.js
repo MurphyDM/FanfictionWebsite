@@ -37,8 +37,10 @@ function Catalog(props) {
             </Form.Control>
 
 
-            <MediaList stories={props.stories}/>
-        </>
+            <MediaList 
+                stories={props.stories} 
+                setReadLaterItem = {props.setReadLaterItem}/>
+            </>
             </div>
         )
 

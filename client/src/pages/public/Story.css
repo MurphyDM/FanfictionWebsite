@@ -16,6 +16,15 @@ h4 {
     text-align: center;
 }
 
+a.comments {
+    font-weight: 700;
+    color: rgb(117, 164, 190);
+}
+
+a:hover{
+    text-decoration-line: none;
+    text-shadow: black;
+}
 .body {
     margin-top: 7vh;
     font-family: 'Arial';
@@ -43,6 +52,7 @@ h4 {
 .toolbar.lightTheme {
     background-color: rgb(245, 245, 245);
 }
+
 .cover {
 
     width: 320px;

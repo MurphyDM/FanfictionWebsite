@@ -5,8 +5,8 @@ const STORIES_ON_PAGE = 15;
 
 function calculateStoriesOffset(pageNumber) {
     return STORIES_ON_PAGE * pageNumber;
-
 }
+
 function uploadStory(responce, image, title, description, body, genre, userId) {
     console.log("UPLOADING FUNCTION");
     Story.create({

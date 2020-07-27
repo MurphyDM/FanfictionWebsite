@@ -19,7 +19,7 @@ class AuthComponent extends Component {
       });
       return;
     }
-
+    
     axios
     .get('/auth/getUser', { headers: { Authorization: getJwt() } 
     }).then(res => {
@@ -27,11 +27,18 @@ class AuthComponent extends Component {
         this.props.setUser({
          user: res.data
         })
+        this.saveUserData(res.data.id, res.data.name, res.data.avatar);
     }).catch(err => this.props.setUser({
         user: null
        }));
   }
 
+  saveUserData(id, name, avatar) {
+    window.sessionStorage.setItem('name', name);
+    window.sessionStorage.setItem('id', id);
+    window.sessionStorage.setItem('avatar', avatar);
+  }
+  
   render() {
     const { user } = this.props.user;
     if (user === undefined) {

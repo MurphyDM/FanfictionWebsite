@@ -52,7 +52,7 @@ function SignIn(props) {
         }).then(res => {
             console.log(res.data)
             localStorage.setItem("jwt", res.data.token);
-            if(res.status === 200) props.history.push("/profile")
+            if(res.status === 200 || res.status === 304) props.history.push("/profile")
         }).catch(() => setError(true));
     }
         return (

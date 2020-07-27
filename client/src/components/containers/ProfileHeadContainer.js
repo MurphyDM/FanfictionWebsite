@@ -8,15 +8,11 @@ import {connect} from "react-redux";
 import ProfileHeadEditMode from '../components/ProfileHeadEditMode'
 import ProfileHead from '../components/ProfileHead'
 
-import AuthenticatedComponent from '../components/auth/AuthenticatedComponent'
-
 const REGULAR_MODE = 'REGULAR_MODE';
 const EDITOR_MODE = 'EDITOR_MODE';
 
 function ProfileContainer(props){
-    const [textColor, setTextColor] = React.useState("white");
-    const [backgroundColor, setBackgroundColor] = React.useState("#395e77");
-    const [username, setUsername] = React.useState(props.user.name)
+    const [username, setUsername] = React.useState(window.sessionStorage.getItem('name'))
     const [errMsg, setErrMsg] = React.useState('');
     const [successMsg, setSuccessMsg] = React.useState('');
     const [mode, setMode] = React.useState(REGULAR_MODE);
@@ -30,8 +26,7 @@ function ProfileContainer(props){
                 Authorization: getJwt() 
             }
         }).then(res => {
-            console.log("username was changed successfully")
-            window.location.reload(); 
+            console.log("username was changed successfully");
             setSuccessMsg("Your profile was changes successfuly");
         }).catch(() => setErrMsg("Can't change your profile right now. We're so sorry!"));
 
@@ -41,7 +36,6 @@ function ProfileContainer(props){
         if(mode===REGULAR_MODE) setMode(EDITOR_MODE);
         else setMode(REGULAR_MODE);
     }
-    console.log('profile container: ', props.user);
 
     return (<>
         
@@ -50,21 +44,22 @@ function ProfileContainer(props){
         setUsername = {setUsername}
         submitChanges = {submitChanges}
         changeMode = {changeMode}
-        avatar = {props.avatar}
+        avatar = {window.sessionStorage.getItem('avatar')}
         mode = {mode}
         success = {successMsg}
         error = {errMsg}
     />}
-    {(mode==REGULAR_MODE)&&<ProfileHead
+    {(mode==REGULAR_MODE)&&<>
+    <ProfileHead
         username= {username}
         setUsername = {setUsername}
         submitChanges = {submitChanges}
         changeMode = {changeMode}
         mode = {mode}
-        avatar = {props.user.avatar}
+        avatar = {window.sessionStorage.getItem('avatar')}
         success = {successMsg}
         error = {errMsg}
-    />}
+    /></>}
 </>)
 }
 
