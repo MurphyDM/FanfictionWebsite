@@ -11,7 +11,7 @@ module.exports = (passport, router) => {
         passport.authenticate('jwt', function (err, user) {
             if (user) {
                 console.log("hello" + user.name + 'your status is' + user.status);
-                if(user.status === 'inactive') res.send('You need to confirm your email!');
+                if(user.status === 'inactive') res. res.status(500).send('You need to confirm your email!');
                 req.header = user.id;
                 next();
             } else {

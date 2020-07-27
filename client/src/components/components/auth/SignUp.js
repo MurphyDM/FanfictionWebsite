@@ -62,7 +62,6 @@ function SignUp(props) {
       })
       .then((res) => {
         console.log(res.data);
-        localStorage.setItem("jwt", res.data.token);
         if (res.status === 200 || res.status === 304)
           props.history.push("/signin");
       })

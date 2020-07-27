@@ -4,7 +4,7 @@ import MediaList from "../../components/components/MediaList";
 function WorksList(props) {
   return (
     <>
-      <MediaList stories={props.stories} />
+     {props.stories&&<MediaList stories={props.stories} />}
     </>
   );
 }

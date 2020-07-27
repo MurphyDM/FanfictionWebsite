@@ -98,7 +98,7 @@ function Story(props) {
             </Col>
           </Row>
 
-          <Nav className={`toolbar ${props.light} justify-content-center`}>
+          <Nav className={`toolbar ${props.light} justify-content-center`} style={{marginBottom: '10vh'}}>
             <Nav.Item>
               <Nav.Link
                 href=""
