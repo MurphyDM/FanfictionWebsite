@@ -30,9 +30,14 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         time: {
-            type: Sequelize.STRING,
+            type: Sequelize.DATE,
             allowNull: false
         }
-    });
+    }, {indexes: [ 
+        {
+            type: 'FULLTEXT', name: 'text_idx', fields: ['body', 'title', 'description', 'genre']
+        }
+
+    ]});
 
 }

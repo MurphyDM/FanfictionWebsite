@@ -13,6 +13,7 @@ function HorizontalScrollCardsContainer(props) {
       fieldName: "genre",
       fieldValue: props.genre,
     };
+    if(props.genre&&props.limit) params['limit'] = props.limit;
 
   React.useEffect(() => {
     console.log(params);

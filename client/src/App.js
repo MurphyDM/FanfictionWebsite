@@ -13,7 +13,7 @@ import Profile from "./pages/protected/Profile";
 import AuthenticatedComponent from "./components/components/auth/AuthenticatedComponent";
 import Catalog from "./pages/public/CatalogContainer";
 import Story from "./pages/public/StoryContainer";
-import Comment from "./pages/public/CommentsContainer";
+import Comment from "./pages/public/CommentContainer";
 import Admin from "./pages/private/Admin";
 
 const store = createStore(rootReducer);

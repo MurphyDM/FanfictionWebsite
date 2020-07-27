@@ -14,7 +14,7 @@ function ControlledTabs(props) {
       {props.components.map((component, i) => {
         return (
           <Tab eventKey={i} title={component.name} key={i}>
-            {activeKey == i && (
+            {activeKey === i && (
               <Suspense fallback={<div>Loading...</div>}>
                 <component.component />
               </Suspense>

@@ -15,7 +15,7 @@ module.exports = (passport, router) => {
                 req.header = user.id;
                 next();
             } else {
-                res.status(500).send("No such user");
+                res.status(550).send("No such user");
                 console.log("err", err)
             }
         })(req, res, next)
@@ -44,11 +44,6 @@ module.exports = (passport, router) => {
         console.log("User id #: ", req.body);
         storyManager.uploadStory(res, req.body.image, req.body.title, req.body.description, req.body.body, req.body.genre, req.header);
     });
-
-    /*router.post('/uploadFile', (req, res) => {
-        console.log("Request!: ", req.body, 'header', req.headers.storyid);
-        storyManager.uploadFile(res, req.body, req.headers.storyid)
-    });*/
 
     router.post('/uploadCover', async (req, res) => {
         try {

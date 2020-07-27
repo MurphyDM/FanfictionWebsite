@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import { getJwt } from "../../helpers/getJwt";
 
@@ -49,7 +49,7 @@ function ProfileContainer(props) {
 
   return (
     <>
-      {mode == EDITOR_MODE && (
+      {mode === EDITOR_MODE && (
         <ProfileHeadEditMode
           username={username}
           setUsername={setUsername}
@@ -61,7 +61,7 @@ function ProfileContainer(props) {
           error={errMsg}
         />
       )}
-      {mode == REGULAR_MODE && (
+      {mode === REGULAR_MODE && (
         <>
           <ProfileHead
             username={username}

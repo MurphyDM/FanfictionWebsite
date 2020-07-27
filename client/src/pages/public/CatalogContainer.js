@@ -11,7 +11,7 @@ function MediaListContainer(props) {
   const [genre, setGenre] = React.useState(props.match.params.genre || "");
 
   let params = {};
-  if (genre != "") {
+  if (genre !== "") {
     console.log("genre", genre);
     params = {
       fieldName: "genre",
@@ -19,7 +19,7 @@ function MediaListContainer(props) {
     };
   }
 
-  React.useEffect(() => {
+  React.useEffect((props) => {
     console.log("Params", params);
     axios
       .get(

@@ -31,10 +31,6 @@ const PLACEHOLDER_AVATAR =
 };
 
 function ProfileHead(props) {
-  const [textColor, setTextColor] = React.useState("white");
-  const [backgroundColor, setBackgroundColor] = React.useState("#395e77");
-  const [avatar, setAvatar] = React.useState(PLACEHOLDER_AVATAR);
-
   return (
     <Container fluid fixed="top" style={styles.container}>
       <Row className="align-content-center" style={styles.row}>

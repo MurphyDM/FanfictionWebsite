@@ -17,6 +17,11 @@ module.exports = (sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false
         }
-    });
+    }, { indexes: [ 
+        {
+            type: 'FULLTEXT', name: 'text_idx', fields: ['body']
+        }
+
+    ]});
 
 }

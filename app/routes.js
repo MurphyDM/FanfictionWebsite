@@ -2,6 +2,7 @@ const jwtsecret = "mysecretkey"; // signing key for JWT
 const jwt = require('jsonwebtoken'); // auth via JWT for hhtp
 const storyManager = require("../database/storiesManager");
 const commentsManager = require("../database/commentsManager");
+const fulltextSearch = require("../database/fulltextSearch")
 
 
 module.exports = function (app, router, passport) {
@@ -77,22 +78,25 @@ module.exports = function (app, router, passport) {
 
     app.get('/getStories', (req, res) => {
         console.log("/getStories route works:", req.query);
-        if(req.query.fieldName&&req.query.fieldValue) {
-            if(req.query.order) storyManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue, req.query.order);
-            else storyManager.getStoriesWhere(res, req.query.fieldName, req.query.fieldValue);
-        }
-        storyManager.getStories(res);
+         storyManager.getStories(res, req.query.fieldName, req.query.fieldValue,  req.query.limit||false, req.query.order);
     });
 
     app.get('/getStoryByPK', (req, res) => {
-        console.log("/getStoryByPK route works:", req.query);
-        storyManager.getStoryByPK(res, req.query.primary, req.query.page);
+        console.log("/getStoryByPK route works:", req.query.primary);
+        storyManager.getStoryByPK(res, req.query.primary);
     });
 
-    app.get('/getComments', async (req, res) => {
+    app.get('/getComments', (req, res) => {
         console.log('/getComments', res.query);
         commentsManager.getCommentsWhere(res, req.query.fieldName, req.query.fieldValue);
     });
+
+    app.get('/searchStory', (req, res) => {
+        fulltextSearch.searchStory(res, req.query.search);
+    })
+    app.get('/searchComment', (req, res) => {
+        fulltextSearch.searchComment(res, req.query.search);
+    })
 
     var auth = require('./protectedRoutes')(passport, router);
     app.use('/auth', auth);

@@ -19,7 +19,6 @@ function StoryForm(props) {
   const [storyDescription, setStoryDescription] = useState("");
   const [storyBody, setStoryBody] = useState("");
   const [storyGenre, setStoryGenre] = useState("0");
-  const [tags, setTags] = useState([]);
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];

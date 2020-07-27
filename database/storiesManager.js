@@ -25,26 +25,15 @@ function uploadStory(responce, image, title, description, body, genre, userId) {
     });
 }
 
-function getStories(res) {
-    Story.findAll({
-        attributes: ['id', 'image', 'title', 'description', 'genre','userId']
-    }).then(stories => {
-        console.log("Result: stories were found");
-        res.json(stories);
-    }).catch(err => {
-        res.json('');
-    });
-}
-
-function getStoriesWhere(res, fieldName = "genre", fieldValue = "original", order = [['id', 'DESC']] ) {
-    console.log("**METHOD Filter", fieldValue)
-    Story.findAll({
-        attributes: ['id', 'image', 'title', 'description', 'genre','userId'],
-        where: {
-            [fieldName]: fieldValue
-        },
-        order: order
-    }).then(stories => {
+function getStories(res, fieldName = null, fieldValue = null, limit = null, order = [['id', 'DESC']] ) {
+    console.log("**METHOD Filter", fieldValue);
+    let params = {};
+    params['attributes']=['id', 'image', 'title', 'description', 'genre','userId'];
+    params['order'] = order;
+    if(limit) params['limit']= parseInt(limit);
+    if(fieldName&&fieldValue) params['where'] = { [fieldName]: fieldValue };
+    console.log("!!!!!!!!!!!!!!!!", params)
+    Story.findAll(params).then(stories => {
         console.log("Result: stories were found");
         res.json(stories);
     }).catch(err => {
@@ -53,7 +42,7 @@ function getStoriesWhere(res, fieldName = "genre", fieldValue = "original", orde
 }
 
 function getStoryByPK(res, primaryKey){
-    Story.findByPk(primaryKey)
+    Story.findByPk(parseInt(primaryKey))
     .then(story => {
         console.log("Result: ", primaryKey, " story was found");
         console.log('story', story)
@@ -122,7 +111,6 @@ module.exports = {
     uploadStory,
     deleteStory,
     getStories, 
-    getStoriesWhere, 
     getStoryByPK,
     updateStory, 
     uploadFile

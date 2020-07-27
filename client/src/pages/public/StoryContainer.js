@@ -9,7 +9,6 @@ import { getJwt } from "../../helpers/getJwt";
 
 import Story from "./Story";
 
-const DARK_THEME = "darkTheme";
 const LIGHT_THEME = "lightTheme";
 const PAGE_SIZE = "15000";
 const initialState = { textSize: 16, pageNumber: 0 };
@@ -37,7 +36,7 @@ function StoryContainer(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [book, setBook] = React.useState([]);
 
-  React.useEffect(() => {
+  React.useEffect((props) => {
     axios
       .get(
         "/getStoryByPK",
@@ -63,7 +62,7 @@ function StoryContainer(props) {
       });
   }, []);
 
-  React.useEffect(() => {
+  React.useEffect((props) => {
     if (isContinue)
       dispatch({
         type: "setPageNumber",
@@ -148,7 +147,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setNewestStories,
-  setUser,
+  setUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryContainer);

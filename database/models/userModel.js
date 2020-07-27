@@ -36,6 +36,11 @@ module.exports = (sequelize) => {
             type: Sequelize.STRING,
             allowNull: true
         }
-    });
+    }, {indexes: [ 
+        {
+            type: 'FULLTEXT', name: 'text_idx', fields: ['name']
+        }
+
+    ]});
 
 }
