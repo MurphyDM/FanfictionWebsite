@@ -23,10 +23,10 @@ function WorksListContainer(props) {
       });
   }, []);
 
-  return props.newestStories ? (
+  return props.newestStories.length > 0 ? (
     <WorksList stories={props.newestStories} />
   ) : (
-    <h2>You don"t have stories</h2>
+    <h4>Empty. You can write you first story right now! Click 'Write story' tab.</h4>
   );
 }
 

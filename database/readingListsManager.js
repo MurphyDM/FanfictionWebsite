@@ -1,24 +1,25 @@
 const date = require('../config/date')
 const db = require('./dbConnector');
+const { response } = require('express');
 const Story = db.Story;
 const User = db.User;
 
 function addToReadingList(responce, userId, storyId) {
-    Story.findByPk(storyId)
-    .then((story) => {
-      if (!story) {
-        console.log("story not found!");
-        return null;
+    User.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        console.log("user not found!");
+        response.json({});
       }
-       User.findByPk(userId).then((user) => {
-        if (!user) {
-          console.log("user not found!");
-          return null;
+       Story.findByPk(storyId).then((story) => {
+        if (!story) {
+          console.log("story not found!");
+          response.json({});
         }
 
         story.addUser(user)
         .then((result) => {
-            responce.send('success')
+            responce.send(result)
         }).catch((err) => responce.send(err));
         console.log(`>> added user id=${user.id} to Story id=${story.id}`);
       });
@@ -34,12 +35,12 @@ function addToReadingList(responce, userId, storyId) {
     .then((story) => {
       if (!story) {
         console.log("story was not found!");
-        return null;
+        response.json({});
       }
        User.findByPk(userId).then((user) => {
         if (!user) {
           console.log("user was not found!");
-          return null;
+          response.json({});
         }
         story.destroy(user)
         .then((result) => {

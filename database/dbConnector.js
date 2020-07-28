@@ -24,7 +24,9 @@ const Comment = require('./models/commentModel')(sequelize);
 User.hasMany(Story);
 User.hasMany(Comment);
 Story.hasMany(Comment);
+User.belongsToMany(Story, { through: 'readingLists'});
 Story.belongsToMany(User, { through: 'readingLists'});
+
 
 sequelize.sync()
 .catch(err=> console.log(err));

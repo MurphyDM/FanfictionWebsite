@@ -45,8 +45,8 @@ function MediaListContainer(props) {
   return (
     <>
     <Header />
-    props.newestStories ? (
-    <Catalog stories={props.newestStories} genre={genre} setGenre={setGenre} />) : 
+    props.newestStories ?
+    <Catalog stories={props.newestStories} genre={genre} setGenre={setGenre}/> : 
     <h2>You don"t have stories</h2>
     </>
     )

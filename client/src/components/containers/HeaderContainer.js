@@ -9,10 +9,10 @@ import AuthHeader from "../components/AuthHeader";
 
 function HeaderContainer(props) {
   const logout = () => {
-    sessionStorage.clear();
     localStorage.clear();
     window.location.reload();
   };
+  
   return getJwt() ? (
     <AuthHeader
       avatar={window.sessionStorage.getItem("avatar")}
